@@ -3,4 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+
+    <!--  Movie Detail  -->
+    <string name="movie_detail_">Notifications</string>
+    <string name="movie_detail_add_fav">Add to favorite</string>
+    <string name="movie_detail_synopsis">Synopsis</string>
+    <string name="movie_detail_poster">Movie Poster</string>
+    <string name="movie_detail_nav_back">Back</string>
 </resources>

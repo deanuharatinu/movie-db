@@ -50,6 +50,7 @@ data class PopularMovieItemResponse(
   companion object {
     fun toDomain(item: PopularMovieItemResponse): PopularMovie {
       return PopularMovie(
+        movieId = item.id.toString(),
         title = item.title.orEmpty(),
         photoUrl = item.posterPath.orEmpty(),
         voteAverage = item.voteAverage ?: 0.0F,

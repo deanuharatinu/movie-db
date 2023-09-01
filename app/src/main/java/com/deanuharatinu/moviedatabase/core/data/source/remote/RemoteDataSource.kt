@@ -1,7 +1,9 @@
 package com.deanuharatinu.moviedatabase.core.data.source.remote
 
 import android.util.Log
+import com.deanuharatinu.moviedatabase.core.data.source.remote.model.MovieDetailResponse
 import com.deanuharatinu.moviedatabase.core.data.source.remote.model.PopularMovieItemResponse
+import com.deanuharatinu.moviedatabase.core.domain.model.MovieDetail
 import com.deanuharatinu.moviedatabase.core.domain.model.PopularMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -25,8 +27,23 @@ class RemoteDataSource @Inject constructor(
         emit(ApiResponse.Empty)
       }
     } catch (throwable: Throwable) {
-      Log.e("asdf", "getPopularMovie: ", throwable)
+      Log.e(TAG, "getPopularMovie: ", throwable)
       emit(ApiResponse.Error(throwable.message.toString()))
     }
   }.flowOn(Dispatchers.IO)
+
+  fun getMovieDetail(movieId: String): Flow<ApiResponse<MovieDetail>> = flow {
+    try {
+      val response = movieService.getMovieDetail(movieId, "9779cbcba5d3823d303e404aa822c5bc")
+      val movieDetail = MovieDetailResponse.toDomain(response)
+      emit(ApiResponse.Success(movieDetail))
+    } catch (throwable: Throwable) {
+      Log.e(TAG, "getMovieDetail: ", throwable)
+      emit(ApiResponse.Error(throwable.message.toString()))
+    }
+  }.flowOn(Dispatchers.IO)
+
+  companion object {
+    const val TAG = "RemoteDataSource"
+  }
 }
