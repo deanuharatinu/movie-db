@@ -20,8 +20,10 @@
         <ImageView
             android:id="@+id/iv_popular_movie"
             android:layout_width="180dp"
-            android:layout_height="270dp"
-            tools:ignore="ContentDescription"
+            android:layout_height="260dp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            tools:ignore="ContetDescription"
             tools:src="@drawable/img_sample_movie" />
 
     </com.google.android.material.card.MaterialCardView>
