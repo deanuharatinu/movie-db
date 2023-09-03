@@ -2,8 +2,8 @@ package com.deanuharatinu.moviedatabase.ui.home.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.deanuharatinu.moviedatabase.core.domain.Resource
-import com.deanuharatinu.moviedatabase.core.domain.usecase.MovieInteractor
+import com.deanuharatinu.core.domain.Resource
+import com.deanuharatinu.core.domain.usecase.MovieInteractor
 import com.deanuharatinu.moviedatabase.ui.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +20,7 @@ data class ViewModelState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-  private val movieUseCase: MovieInteractor,
+  private val movieUseCase: com.deanuharatinu.core.domain.usecase.MovieInteractor,
 ) : ViewModel() {
   private val _uiState = MutableStateFlow(ViewModelState())
   val uiState = _uiState.asStateFlow()
@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     viewModelScope.launch {
       movieUseCase.getPopularMovies().collect { result ->
         when (result) {
-          is Resource.Success -> {
+          is com.deanuharatinu.core.domain.Resource.Success -> {
             val data = result.data.map { PopularMovieUi.fromDomain(it) }
             _uiState.value = ViewModelState(
               isLoading = false,
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
             )
           }
 
-          is Resource.Error -> {
+          is com.deanuharatinu.core.domain.Resource.Error -> {
             val errorMessage = result.message
             _uiState.value = ViewModelState(
               isLoading = false,

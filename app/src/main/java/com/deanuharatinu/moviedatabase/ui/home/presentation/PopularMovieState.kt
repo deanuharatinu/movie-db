@@ -1,6 +1,6 @@
 package com.deanuharatinu.moviedatabase.ui.home.presentation
 
-import com.deanuharatinu.moviedatabase.core.domain.model.PopularMovie
+import com.deanuharatinu.core.domain.model.PopularMovie
 
 data class PopularMovieUi(
   val movieId: String,
@@ -9,7 +9,7 @@ data class PopularMovieUi(
   val voteAverage: Float,
 ) {
   companion object {
-    fun fromDomain(popularMovie: PopularMovie): PopularMovieUi {
+    fun fromDomain(popularMovie: com.deanuharatinu.core.domain.model.PopularMovie): PopularMovieUi {
       return PopularMovieUi(
         movieId = popularMovie.movieId,
         title = popularMovie.title,

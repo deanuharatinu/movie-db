@@ -1,21 +1,15 @@
 plugins {
-  id("com.android.application")
+  id("com.android.dynamic-feature")
   id("org.jetbrains.kotlin.android")
   id("com.google.dagger.hilt.android")
   id("kotlin-kapt")
 }
-
 android {
-  namespace = "com.deanuharatinu.moviedatabase"
+  namespace = "com.deanuharatinu.moviedatabase.favorite"
   compileSdk = 33
 
   defaultConfig {
-    applicationId = "com.deanuharatinu.moviedatabase"
     minSdk = 28
-    targetSdk = 33
-    versionCode = 1
-    versionName = "1.0"
-
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
@@ -25,7 +19,6 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
-
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
@@ -37,16 +30,13 @@ android {
     viewBinding = true
     buildConfig = true
   }
-  dynamicFeatures += setOf(":favorite")
 }
 
 apply(from = "../shared_dependencies.gradle")
 
 dependencies {
+  implementation(project(":app"))
   implementation(project(":core"))
-
-  // Glide
-  implementation("com.github.bumptech.glide:glide:4.16.0")
 }
 
 kapt {

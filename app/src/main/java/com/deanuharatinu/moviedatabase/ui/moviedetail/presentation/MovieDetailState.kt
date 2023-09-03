@@ -1,6 +1,6 @@
 package com.deanuharatinu.moviedatabase.ui.moviedetail.presentation
 
-import com.deanuharatinu.moviedatabase.core.domain.model.MovieDetail
+import com.deanuharatinu.core.domain.model.MovieDetail
 import kotlin.time.Duration.Companion.minutes
 
 data class MovieDetailUi(
@@ -12,7 +12,7 @@ data class MovieDetailUi(
   val genres: List<String>,
 ) {
   companion object {
-    fun fromDomain(movieDetail: MovieDetail): MovieDetailUi {
+    fun fromDomain(movieDetail: com.deanuharatinu.core.domain.model.MovieDetail): MovieDetailUi {
       return MovieDetailUi(
         title = movieDetail.title,
         runTime = movieDetail.runTime.getReadableRuntime(),

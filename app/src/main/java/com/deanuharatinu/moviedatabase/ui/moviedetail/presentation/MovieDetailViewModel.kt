@@ -2,8 +2,8 @@ package com.deanuharatinu.moviedatabase.ui.moviedetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.deanuharatinu.moviedatabase.core.domain.Resource
-import com.deanuharatinu.moviedatabase.core.domain.usecase.MovieUseCase
+import com.deanuharatinu.core.domain.Resource
+import com.deanuharatinu.core.domain.usecase.MovieUseCase
 import com.deanuharatinu.moviedatabase.ui.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,7 +28,7 @@ class MovieDetailViewModel @Inject constructor(
     viewModelScope.launch {
       movieUseCase.getMovieDetail(movieId).collect { result ->
         when (result) {
-          is Resource.Success -> {
+          is com.deanuharatinu.core.domain.Resource.Success -> {
             val data = result.data
             _uiState.value = ViewModelState(
               isLoading = false,
@@ -36,7 +36,7 @@ class MovieDetailViewModel @Inject constructor(
             )
           }
 
-          is Resource.Error -> {
+          is com.deanuharatinu.core.domain.Resource.Error -> {
             val errorMessage = result.message
             _uiState.value = ViewModelState(
               isLoading = false,
