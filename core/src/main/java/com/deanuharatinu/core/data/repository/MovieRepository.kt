@@ -1,5 +1,7 @@
 package com.deanuharatinu.core.data.repository
 
+import com.deanuharatinu.core.data.source.local.LocalDataSource
+import com.deanuharatinu.core.data.source.local.model.FavoriteMovieEntity
 import com.deanuharatinu.core.data.source.remote.ApiResponse
 import com.deanuharatinu.core.data.source.remote.RemoteDataSource
 import com.deanuharatinu.core.domain.Resource
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 class MovieRepository @Inject constructor(
   private val remoteDataSource: RemoteDataSource,
-//  private val localDataSource: LocalDataSource,
+  private val localDataSource: LocalDataSource,
 ) : IMovieRepository {
   override fun getPopularMovies(): Flow<Resource<List<PopularMovie>>> = flow {
     remoteDataSource.getPopularMovie().collect { result ->
@@ -34,8 +36,15 @@ class MovieRepository @Inject constructor(
     }
   }
 
-  override fun getFavoriteMovies(): Flow<List<FavoriteMovie>> {
-    TODO("Not yet implemented")
+  override fun getFavoriteMovies(): Flow<Resource<List<FavoriteMovie>>> = flow {
+    localDataSource.getFavoriteMovies().collect { result ->
+      val favoriteMovies = result.map { FavoriteMovieEntity.toDomain(it) }
+      emit(Resource.Success(favoriteMovies))
+    }
+  }
+
+  override suspend fun addFavoriteMovie(favoriteMovie: FavoriteMovie) {
+    localDataSource.addFavoriteMovie(favoriteMovie)
   }
 
   override fun getMovieDetail(movieId: String): Flow<Resource<MovieDetail>> = flow {

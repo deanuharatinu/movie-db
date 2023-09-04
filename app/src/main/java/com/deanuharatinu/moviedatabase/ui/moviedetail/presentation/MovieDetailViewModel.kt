@@ -3,9 +3,11 @@ package com.deanuharatinu.moviedatabase.ui.moviedetail.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.deanuharatinu.core.domain.Resource
+import com.deanuharatinu.core.domain.model.FavoriteMovie
 import com.deanuharatinu.core.domain.usecase.MovieUseCase
 import com.deanuharatinu.moviedatabase.ui.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -28,7 +30,7 @@ class MovieDetailViewModel @Inject constructor(
     viewModelScope.launch {
       movieUseCase.getMovieDetail(movieId).collect { result ->
         when (result) {
-          is com.deanuharatinu.core.domain.Resource.Success -> {
+          is Resource.Success -> {
             val data = result.data
             _uiState.value = ViewModelState(
               isLoading = false,
@@ -36,7 +38,7 @@ class MovieDetailViewModel @Inject constructor(
             )
           }
 
-          is com.deanuharatinu.core.domain.Resource.Error -> {
+          is Resource.Error -> {
             val errorMessage = result.message
             _uiState.value = ViewModelState(
               isLoading = false,
@@ -45,6 +47,20 @@ class MovieDetailViewModel @Inject constructor(
           }
         }
       }
+    }
+  }
+
+  fun addFavoriteMovie(movieDetailUi: MovieDetailUi) {
+    val dispatcher = Dispatchers.IO
+    viewModelScope.launch(dispatcher) {
+      val favoriteMovie = FavoriteMovie(
+        movieId = movieDetailUi.movieId,
+        title = movieDetailUi.title,
+        photoUrl = movieDetailUi.posterUrl,
+        voteAverage = movieDetailUi.rating,
+        description = movieDetailUi.synopsis,
+      )
+      movieUseCase.addFavoriteMovie(favoriteMovie)
     }
   }
 }

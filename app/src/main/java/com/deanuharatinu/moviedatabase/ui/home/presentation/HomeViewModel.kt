@@ -20,7 +20,7 @@ data class ViewModelState(
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-  private val movieUseCase: com.deanuharatinu.core.domain.usecase.MovieInteractor,
+  private val movieUseCase: MovieInteractor,
 ) : ViewModel() {
   private val _uiState = MutableStateFlow(ViewModelState())
   val uiState = _uiState.asStateFlow()
@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     viewModelScope.launch {
       movieUseCase.getPopularMovies().collect { result ->
         when (result) {
-          is com.deanuharatinu.core.domain.Resource.Success -> {
+          is Resource.Success -> {
             val data = result.data.map { PopularMovieUi.fromDomain(it) }
             _uiState.value = ViewModelState(
               isLoading = false,
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
             )
           }
 
-          is com.deanuharatinu.core.domain.Resource.Error -> {
+          is Resource.Error -> {
             val errorMessage = result.message
             _uiState.value = ViewModelState(
               isLoading = false,

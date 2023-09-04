@@ -9,7 +9,7 @@ data class PopularMovieUi(
   val voteAverage: Float,
 ) {
   companion object {
-    fun fromDomain(popularMovie: com.deanuharatinu.core.domain.model.PopularMovie): PopularMovieUi {
+    fun fromDomain(popularMovie: PopularMovie): PopularMovieUi {
       return PopularMovieUi(
         movieId = popularMovie.movieId,
         title = popularMovie.title,

@@ -4,30 +4,32 @@ import com.deanuharatinu.core.domain.model.MovieDetail
 import kotlin.time.Duration.Companion.minutes
 
 data class MovieDetailUi(
+  val movieId: Int,
   val title: String,
-  val runTime: String,
+  val runTime: Int,
   val posterUrl: String,
   val rating: Float,
   val synopsis: String,
   val genres: List<String>,
 ) {
   companion object {
-    fun fromDomain(movieDetail: com.deanuharatinu.core.domain.model.MovieDetail): MovieDetailUi {
+    fun fromDomain(movieDetail: MovieDetail): MovieDetailUi {
       return MovieDetailUi(
+        movieId = movieDetail.movieId,
         title = movieDetail.title,
-        runTime = movieDetail.runTime.getReadableRuntime(),
-        posterUrl = movieDetail.posterUrl.getImageUrl(),
+        runTime = movieDetail.runTime,
+        posterUrl = movieDetail.posterUrl,
         rating = movieDetail.rating,
         synopsis = movieDetail.synopsis,
         genres = movieDetail.genres,
       )
     }
 
-    private fun String.getImageUrl(): String {
+    fun String.getImageUrl(): String {
       return "https://image.tmdb.org/t/p/w500/${this}"
     }
 
-    private fun Int.getReadableRuntime(): String {
+    fun Int.getReadableRuntime(): String {
       val duration = this.minutes
       return String.format("%d hours %02d minutes", duration.inWholeHours, duration.inWholeMinutes)
     }

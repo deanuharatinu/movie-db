@@ -12,6 +12,9 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.deanuharatinu.moviedatabase.R
 import com.deanuharatinu.moviedatabase.databinding.ActivityMovieDetailBinding
+import com.deanuharatinu.moviedatabase.ui.moviedetail.presentation.MovieDetailUi
+import com.deanuharatinu.moviedatabase.ui.moviedetail.presentation.MovieDetailUi.Companion.getImageUrl
+import com.deanuharatinu.moviedatabase.ui.moviedetail.presentation.MovieDetailUi.Companion.getReadableRuntime
 import com.deanuharatinu.moviedatabase.ui.moviedetail.presentation.MovieDetailViewModel
 import com.deanuharatinu.moviedatabase.ui.moviedetail.presentation.ViewModelState
 import com.google.android.material.chip.Chip
@@ -22,6 +25,7 @@ import kotlinx.coroutines.launch
 class MovieDetailActivity : AppCompatActivity() {
   private lateinit var binding: ActivityMovieDetailBinding
   private val viewModel: MovieDetailViewModel by viewModels()
+  private lateinit var movieDetailUi: MovieDetailUi
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -45,6 +49,10 @@ class MovieDetailActivity : AppCompatActivity() {
 
   private fun initOnClick() {
     binding.btnNavBack.setOnClickListener { finish() }
+
+    binding.addFavorite.setOnClickListener {
+      viewModel.addFavoriteMovie(movieDetailUi)
+    }
   }
 
   private fun loadContent(viewModelState: ViewModelState) {
@@ -57,15 +65,16 @@ class MovieDetailActivity : AppCompatActivity() {
       startShimmer()
     } else {
       viewModelState.movieDetail?.let { movieDetailUi ->
+        this.movieDetailUi = movieDetailUi
         stopShimmer()
 
         Glide
           .with(binding.root.context)
-          .load(movieDetailUi.posterUrl)
+          .load(movieDetailUi.posterUrl.getImageUrl())
           .placeholder(circularProgressDrawable)
           .into(binding.ivMoviePoster)
 
-        binding.tvRuntime.text = movieDetailUi.runTime
+        binding.tvRuntime.text = movieDetailUi.runTime.getReadableRuntime()
         binding.tvMovieTitle.text = movieDetailUi.title
         binding.tvRating.apply {
           visibility = View.VISIBLE

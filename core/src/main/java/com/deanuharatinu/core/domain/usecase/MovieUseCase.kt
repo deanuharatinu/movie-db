@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieUseCase {
   fun getPopularMovies(): Flow<Resource<List<PopularMovie>>>
-  fun getFavoriteMovies(): Flow<List<FavoriteMovie>>
+  fun getFavoriteMovies(): Flow<Resource<List<FavoriteMovie>>>
   fun getMovieDetail(movieId: String): Flow<Resource<MovieDetail>>
+
+  suspend fun addFavoriteMovie(favoriteMovie: FavoriteMovie)
 }

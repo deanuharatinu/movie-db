@@ -30,6 +30,7 @@ data class MovieDetailResponse(
   companion object {
     fun toDomain(item: MovieDetailResponse): MovieDetail {
       return MovieDetail(
+        movieId = item.id ?: 0,
         title = item.title.orEmpty(),
         runTime = item.runtime ?: 0,
         posterUrl = item.posterPath.orEmpty(),
