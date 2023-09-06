@@ -10,6 +10,7 @@ data class MovieDetailUi(
   val posterUrl: String,
   val rating: Float,
   val synopsis: String,
+  val isFavorite: Boolean,
   val genres: List<String>,
 ) {
   companion object {
@@ -22,6 +23,7 @@ data class MovieDetailUi(
         rating = movieDetail.rating,
         synopsis = movieDetail.synopsis,
         genres = movieDetail.genres,
+        isFavorite = movieDetail.isFavorite
       )
     }
 

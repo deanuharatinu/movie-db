@@ -8,4 +8,5 @@ data class MovieDetail(
   val rating: Float,
   val synopsis: String,
   val genres: List<String>,
+  var isFavorite: Boolean =  false,
 )

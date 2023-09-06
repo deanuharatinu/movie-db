@@ -7,20 +7,20 @@ import com.deanuharatinu.core.domain.model.FavoriteMovie
 @Entity(tableName = "favorite_movie")
 data class FavoriteMovieEntity(
   @PrimaryKey
-  val movieId: Int,
-  val title: String,
-  val photoUrl: String,
-  val voteAverage: Float,
-  val description: String,
+  val movieId: Int?,
+  val title: String?,
+  val photoUrl: String?,
+  val voteAverage: Float?,
+  val description: String?,
 ) {
   companion object {
     fun toDomain(favoriteMovieEntity: FavoriteMovieEntity): FavoriteMovie {
       return FavoriteMovie(
-        movieId = favoriteMovieEntity.movieId,
-        title = favoriteMovieEntity.title,
-        photoUrl = favoriteMovieEntity.photoUrl,
-        voteAverage = favoriteMovieEntity.voteAverage,
-        description = favoriteMovieEntity.description,
+        movieId = favoriteMovieEntity.movieId ?: 0,
+        title = favoriteMovieEntity.title.orEmpty(),
+        photoUrl = favoriteMovieEntity.photoUrl.orEmpty(),
+        voteAverage = favoriteMovieEntity.voteAverage ?: 0.0F,
+        description = favoriteMovieEntity.description.orEmpty(),
       )
     }
 

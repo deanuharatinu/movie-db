@@ -38,7 +38,7 @@ data class MovieDetailResponse(
         synopsis = item.overview.orEmpty(),
         genres = item.genres?.map { genreResponse ->
           genreResponse?.name.orEmpty()
-        }.orEmpty()
+        }.orEmpty(),
       )
     }
   }

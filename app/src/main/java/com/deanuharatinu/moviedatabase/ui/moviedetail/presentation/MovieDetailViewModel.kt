@@ -61,6 +61,11 @@ class MovieDetailViewModel @Inject constructor(
         voteAverage = movieDetailUi.rating,
         description = movieDetailUi.synopsis,
       )
+
+      _uiState.value = ViewModelState(
+        isLoading = false,
+        movieDetail = uiState.value.movieDetail?.copy(isFavorite = !movieDetailUi.isFavorite)
+      )
       movieUseCase.addFavoriteMovie(favoriteMovie)
     }
   }

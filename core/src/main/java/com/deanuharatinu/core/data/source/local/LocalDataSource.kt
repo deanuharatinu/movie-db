@@ -12,6 +12,9 @@ class LocalDataSource @Inject constructor(
   fun getFavoriteMovies(): Flow<List<FavoriteMovieEntity>> = movieDao.getFavoriteMovies()
 
   suspend fun addFavoriteMovie(favoriteMovie: FavoriteMovie) {
-    movieDao.insertFavoriteMovie(FavoriteMovieEntity.fromDomain(favoriteMovie))
+    movieDao.addFavoriteMovie(FavoriteMovieEntity.fromDomain(favoriteMovie))
   }
+
+  fun getFavoriteMovieById(movieId: String): FavoriteMovieEntity? = movieDao
+    .getFavoriteMovieById(movieId)
 }

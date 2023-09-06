@@ -1,5 +1,6 @@
 package com.deanuharatinu.moviedatabase.ui.moviedetail
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -61,12 +62,9 @@ class MovieDetailActivity : AppCompatActivity() {
     circularProgressDrawable.centerRadius = 60f
     circularProgressDrawable.start()
 
-    if (viewModelState.isLoading) {
-      startShimmer()
-    } else {
+    if (!viewModelState.isLoading) {
       viewModelState.movieDetail?.let { movieDetailUi ->
         this.movieDetailUi = movieDetailUi
-        stopShimmer()
 
         Glide
           .with(binding.root.context)
@@ -82,6 +80,8 @@ class MovieDetailActivity : AppCompatActivity() {
         }
         binding.tvSynopsis.text = movieDetailUi.synopsis
 
+        binding.addFavorite.imageTintList = setFavoriteButtonColor(movieDetailUi.isFavorite)
+
         binding.cgGenres.chipGroup.removeAllViews()
         movieDetailUi.genres.forEach { genre ->
           val chip = LayoutInflater.from(this)
@@ -94,11 +94,10 @@ class MovieDetailActivity : AppCompatActivity() {
     }
   }
 
-  private fun startShimmer() {
-
-  }
-
-  private fun stopShimmer() {
-
-  }
+  private fun setFavoriteButtonColor(isFavorite: Boolean): ColorStateList =
+    if (isFavorite) {
+      ColorStateList.valueOf(getColor(R.color.orange_100))
+    } else {
+      ColorStateList.valueOf(getColor(R.color.white_100))
+    }
 }

@@ -47,6 +47,15 @@ class MovieRepository @Inject constructor(
     localDataSource.addFavoriteMovie(favoriteMovie)
   }
 
+  override fun getFavoriteMovieById(movieId: String): Flow<Resource<FavoriteMovie>> = flow {
+    val result = localDataSource.getFavoriteMovieById(movieId)
+    if (result == null) {
+      emit(Resource.Error(""))
+    } else {
+      emit(Resource.Success(FavoriteMovieEntity.toDomain(result)))
+    }
+  }
+
   override fun getMovieDetail(movieId: String): Flow<Resource<MovieDetail>> = flow {
     remoteDataSource.getMovieDetail(movieId).collect { result ->
       when (result) {

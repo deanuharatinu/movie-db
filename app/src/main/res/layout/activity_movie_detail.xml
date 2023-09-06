@@ -157,7 +157,6 @@
         android:contentDescription="@string/movie_detail_add_fav"
         app:backgroundTint="@color/blue_400"
         app:elevation="16dp"
-        app:fabSize="mini"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_favorite_16dp"
