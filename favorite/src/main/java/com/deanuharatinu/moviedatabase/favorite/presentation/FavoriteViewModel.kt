@@ -7,6 +7,8 @@ import com.deanuharatinu.core.domain.usecase.MovieUseCase
 import com.deanuharatinu.moviedatabase.ui.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,7 +24,7 @@ class FavoriteViewModel @Inject constructor(
   private val _uiState = MutableStateFlow(ViewModelState())
   val uiState = _uiState.asStateFlow()
 
-  init {
+  fun getFavoriteMovies() {
     viewModelScope.launch {
       movieUseCase.getFavoriteMovies().collect { result ->
         val data = (result as Resource.Success).data.map { FavoriteMovieUi.fromDomain(it) }

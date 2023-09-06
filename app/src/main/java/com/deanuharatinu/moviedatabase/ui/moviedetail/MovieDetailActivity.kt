@@ -76,7 +76,7 @@ class MovieDetailActivity : AppCompatActivity() {
         binding.tvMovieTitle.text = movieDetailUi.title
         binding.tvRating.apply {
           visibility = View.VISIBLE
-          text = movieDetailUi.rating.toString()
+          text = String.format("%.2f", movieDetailUi.rating)
         }
         binding.tvSynopsis.text = movieDetailUi.synopsis
 

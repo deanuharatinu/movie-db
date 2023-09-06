@@ -1,7 +1,7 @@
 package com.deanuharatinu.moviedatabase.favorite
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +12,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.deanuharatinu.moviedatabase.favorite.databinding.FragmentFavoriteBinding
 import com.deanuharatinu.moviedatabase.favorite.di.DaggerFavoriteComponent
 import com.deanuharatinu.moviedatabase.favorite.presentation.FavoriteViewModel
+import com.deanuharatinu.moviedatabase.favorite.presentation.ViewModelState
 import com.deanuharatinu.moviedatabase.ui.di.FavoriteModule
-import com.deanuharatinu.moviedatabase.ui.home.presentation.ViewModelState
+import com.deanuharatinu.moviedatabase.ui.moviedetail.MovieDetailActivity
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class FavoriteFragment : Fragment() {
   private var _binding: FragmentFavoriteBinding? = null
   private val binding get() = _binding!!
+  private lateinit var adapter: FavoriteMovieAdapter
 
   @Inject
   lateinit var viewModel: FavoriteViewModel
@@ -51,8 +53,13 @@ class FavoriteFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
-//    initRecyclerView()
+    initRecyclerView()
     initDataObserver()
+  }
+
+  override fun onResume() {
+    super.onResume()
+    viewModel.getFavoriteMovies()
   }
 
   override fun onDestroyView() {
@@ -60,31 +67,29 @@ class FavoriteFragment : Fragment() {
     _binding = null
   }
 
-//  private fun initRecyclerView() {
-//    adapter = PopularMovieAdapter { movieId ->
-//      val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
-//      intent.putExtra("movie_id", movieId)
-//      startActivity(intent)
-//    }
-//    binding.rvPopularMovie.adapter = adapter
-//  }
+  private fun initRecyclerView() {
+    adapter = FavoriteMovieAdapter { movieId ->
+      val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
+      intent.putExtra("movie_id", movieId)
+      startActivity(intent)
+    }
+    binding.rvFavoriteMovie.adapter = adapter
+  }
 
   private fun initDataObserver() {
     lifecycleScope.launch {
-      repeatOnLifecycle(Lifecycle.State.STARTED) {
-        viewModel.uiState.collect {
-          Log.d("TAG", "initDataObserver: ${it.favoriteMovie.size}")
-        }
+      repeatOnLifecycle(Lifecycle.State.RESUMED) {
+        viewModel.uiState.collect(::loadContent)
       }
     }
   }
 
   private fun loadContent(viewModelState: ViewModelState) {
-    if (viewModelState.isLoading) {
-//      binding.loading.visibility = View.VISIBLE
+    if (viewModelState.favoriteMovie.isEmpty()) {
+      binding.layoutNotFound.visibility = View.VISIBLE
     } else {
-//      binding.loading.visibility = View.GONE
-//      adapter.submitList(viewModelState.popularMovie)
+      binding.layoutNotFound.visibility = View.GONE
+      adapter.submitList(viewModelState.favoriteMovie)
     }
   }
 }

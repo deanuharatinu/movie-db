@@ -44,9 +44,6 @@ apply(from = "../shared_dependencies.gradle")
 
 dependencies {
   implementation(project(":core"))
-
-  // Glide
-  implementation("com.github.bumptech.glide:glide:4.16.0")
 }
 
 kapt {
