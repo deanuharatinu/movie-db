@@ -23,7 +23,7 @@
             android:layout_height="260dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
-            tools:ignore="ContetDescription"
+            tools:ignore="ContentDescription,ContetDescription"
             tools:src="@drawable/img_sample_movie" />
 
     </com.google.android.material.card.MaterialCardView>

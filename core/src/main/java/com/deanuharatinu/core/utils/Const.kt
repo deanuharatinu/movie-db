@@ -6,7 +6,3 @@ object ApiConstants {
   const val MOVIE_POPULAR = "movie/popular"
   const val MOVIE_DETAIL = "movie/"
 }
-
-object ApiParameters {
-  const val API_KEY = "api_key"
-}

@@ -12,10 +12,4 @@
         tools:layout="@layout/fragment_home" />
 
     <include app:graph="@navigation/favorite_nav_graph_host" />
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.deanuharatinu.moviedatabase.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
 </navigation>

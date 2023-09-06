@@ -2,11 +2,9 @@
     <string name="app_name">Movie Database</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
-    <string name="title_notifications">Notifications</string>
     <string name="popular_movies">Popular Movies</string>
 
     <!--  Movie Detail  -->
-    <string name="movie_detail_">Notifications</string>
     <string name="movie_detail_add_fav">Add to favorite</string>
     <string name="movie_detail_synopsis">Synopsis</string>
     <string name="movie_detail_poster">Movie Poster</string>

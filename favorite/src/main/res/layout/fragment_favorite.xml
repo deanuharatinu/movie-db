@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/blue_200">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -55,34 +54,22 @@
         tools:itemCount="2"
         tools:listitem="@layout/item_favorite_movie" />
 
-
-    <LinearLayout
+    <TextView
         android:id="@+id/layout_not_found"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="16dp"
+        android:text="@string/empty_favorite_list"
+        android:textColor="@color/white_100"
+        android:textSize="20sp"
+        android:textStyle="italic"
         android:visibility="gone"
+        app:drawableTopCompat="@drawable/ic_no_data_100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:visibility="visible">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_no_data_100dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Empty Favorite List"
-            android:textColor="@color/white_100"
-            android:textSize="20sp"
-            android:textStyle="italic" />
-
-    </LinearLayout>
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
