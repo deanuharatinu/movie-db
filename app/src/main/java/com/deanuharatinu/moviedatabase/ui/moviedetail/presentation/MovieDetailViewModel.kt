@@ -2,12 +2,13 @@ package com.deanuharatinu.moviedatabase.ui.moviedetail.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.deanuharatinu.core.di.IoDispatcher
 import com.deanuharatinu.core.domain.Resource
 import com.deanuharatinu.core.domain.model.FavoriteMovie
 import com.deanuharatinu.core.domain.usecase.MovieUseCase
 import com.deanuharatinu.moviedatabase.ui.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -22,6 +23,7 @@ data class ViewModelState(
 @HiltViewModel
 class MovieDetailViewModel @Inject constructor(
   private val movieUseCase: MovieUseCase,
+  @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
   private val _uiState = MutableStateFlow(ViewModelState())
   val uiState = _uiState.asStateFlow()
@@ -51,8 +53,7 @@ class MovieDetailViewModel @Inject constructor(
   }
 
   fun addFavoriteMovie(movieDetailUi: MovieDetailUi) {
-    val dispatcher = Dispatchers.IO
-    viewModelScope.launch(dispatcher) {
+    viewModelScope.launch(ioDispatcher) {
       val favoriteMovie = FavoriteMovie(
         movieId = movieDetailUi.movieId,
         title = movieDetailUi.title,
