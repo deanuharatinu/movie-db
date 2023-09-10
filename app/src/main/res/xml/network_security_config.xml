@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">api.themoviedb.org</domain>
+        <pin-set expiration="2024-09-17">
+            <pin digest="SHA-256">5VLcahb6x4EvvFrCF2TePZulWqrLHS2jCg9Ywv6JHog=</pin>
+            <!-- backup pin -->
+            <pin digest="SHA-256">vxRon/El5KuI4vx5ey1DgmsYmRY0nDd5Cg4GfJ8S+bg=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
