@@ -67,29 +67,31 @@ class MovieDetailActivity : AppCompatActivity() {
       viewModelState.movieDetail?.let { movieDetailUi ->
         this.movieDetailUi = movieDetailUi
 
-        Glide
-          .with(binding.root.context)
-          .load(movieDetailUi.posterUrl.getImageUrl())
-          .placeholder(circularProgressDrawable)
-          .into(binding.ivMoviePoster)
+        with(binding) {
+          Glide
+            .with(root.context)
+            .load(movieDetailUi.posterUrl.getImageUrl())
+            .placeholder(circularProgressDrawable)
+            .into(ivMoviePoster)
 
-        binding.tvRuntime.text = movieDetailUi.runTime.getReadableRuntime()
-        binding.tvMovieTitle.text = movieDetailUi.title
-        binding.tvRating.apply {
-          visibility = View.VISIBLE
-          text = String.format("%.2f", movieDetailUi.rating)
-        }
-        binding.tvSynopsis.text = movieDetailUi.synopsis
+          tvRuntime.text = movieDetailUi.runTime.getReadableRuntime()
+          tvMovieTitle.text = movieDetailUi.title
+          tvRating.apply {
+            visibility = View.VISIBLE
+            text = String.format("%.2f", movieDetailUi.rating)
+          }
+          tvSynopsis.text = movieDetailUi.synopsis
 
-        binding.addFavorite.imageTintList = setFavoriteButtonColor(movieDetailUi.isFavorite)
+          addFavorite.imageTintList = setFavoriteButtonColor(movieDetailUi.isFavorite)
 
-        binding.cgGenres.chipGroup.removeAllViews()
-        movieDetailUi.genres.forEach { genre ->
-          val chip = LayoutInflater.from(this)
-            .inflate(R.layout.item_chip_genre, binding.root, false)
-          (chip as Chip).text = genre
+          cgGenres.chipGroup.removeAllViews()
+          movieDetailUi.genres.forEach { genre ->
+            val chip = LayoutInflater.from(this@MovieDetailActivity)
+              .inflate(R.layout.item_chip_genre, root, false)
+            (chip as Chip).text = genre
 
-          binding.cgGenres.chipGroup.addView(chip)
+            cgGenres.chipGroup.addView(chip)
+          }
         }
       }
     }
