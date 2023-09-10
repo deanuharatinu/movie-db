@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
+import com.deanuharatinu.core.utils.IntentConstants
 import com.deanuharatinu.moviedatabase.R
 import com.deanuharatinu.moviedatabase.databinding.ActivityMovieDetailBinding
 import com.deanuharatinu.moviedatabase.ui.moviedetail.presentation.MovieDetailUi
@@ -38,7 +39,7 @@ class MovieDetailActivity : AppCompatActivity() {
   }
 
   private fun initData() {
-    val movieId = intent.getStringExtra("movie_id")
+    val movieId = intent.getStringExtra(IntentConstants.MOVIE_ID)
     viewModel.getMovieDetail(movieId.orEmpty())
 
     lifecycleScope.launch {

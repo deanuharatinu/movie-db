@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.deanuharatinu.core.utils.IntentConstants
 import com.deanuharatinu.moviedatabase.favorite.databinding.FragmentFavoriteBinding
 import com.deanuharatinu.moviedatabase.favorite.di.DaggerFavoriteComponent
 import com.deanuharatinu.moviedatabase.favorite.presentation.FavoriteViewModel
@@ -70,7 +71,7 @@ class FavoriteFragment : Fragment() {
   private fun initRecyclerView() {
     adapter = FavoriteMovieAdapter { movieId ->
       val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
-      intent.putExtra("movie_id", movieId)
+      intent.putExtra(IntentConstants.MOVIE_ID, movieId)
       startActivity(intent)
     }
     binding.rvFavoriteMovie.adapter = adapter

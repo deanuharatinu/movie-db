@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.deanuharatinu.core.utils.IntentConstants
 import com.deanuharatinu.moviedatabase.databinding.FragmentHomeBinding
 import com.deanuharatinu.moviedatabase.ui.home.presentation.HomeViewModel
 import com.deanuharatinu.moviedatabase.ui.home.presentation.ViewModelState
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
   private fun initRecyclerView() {
     adapter = PopularMovieAdapter { movieId ->
       val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
-      intent.putExtra("movie_id", movieId)
+      intent.putExtra(IntentConstants.MOVIE_ID, movieId)
       startActivity(intent)
     }
     binding.rvPopularMovie.adapter = adapter
