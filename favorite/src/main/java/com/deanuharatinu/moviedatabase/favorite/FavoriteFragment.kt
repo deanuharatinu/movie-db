@@ -23,7 +23,7 @@ import javax.inject.Inject
 class FavoriteFragment : Fragment() {
   private var _binding: FragmentFavoriteBinding? = null
   private val binding get() = _binding!!
-  private lateinit var adapter: FavoriteMovieAdapter
+  private var adapter: FavoriteMovieAdapter? = null
 
   @Inject
   lateinit var viewModel: FavoriteViewModel
@@ -66,6 +66,7 @@ class FavoriteFragment : Fragment() {
   override fun onDestroyView() {
     super.onDestroyView()
     _binding = null
+    adapter = null
   }
 
   private fun initRecyclerView() {
@@ -88,9 +89,11 @@ class FavoriteFragment : Fragment() {
   private fun loadContent(viewModelState: ViewModelState) {
     if (viewModelState.favoriteMovie.isEmpty()) {
       binding.layoutNotFound.visibility = View.VISIBLE
+      binding.rvFavoriteMovie.visibility = View.GONE
     } else {
       binding.layoutNotFound.visibility = View.GONE
-      adapter.submitList(viewModelState.favoriteMovie)
+      binding.rvFavoriteMovie.visibility = View.VISIBLE
+      adapter?.submitList(viewModelState.favoriteMovie)
     }
   }
 }

@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
   private var _binding: FragmentHomeBinding? = null
   private val binding get() = _binding!!
   private val homeViewModel: HomeViewModel by viewModels()
-  private lateinit var adapter: PopularMovieAdapter
+  private var adapter: PopularMovieAdapter? = null
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
   override fun onDestroyView() {
     super.onDestroyView()
     _binding = null
+    adapter = null
   }
 
   private fun initRecyclerView() {
@@ -67,7 +68,7 @@ class HomeFragment : Fragment() {
       binding.loading.visibility = View.VISIBLE
     } else {
       binding.loading.visibility = View.GONE
-      adapter.submitList(viewModelState.popularMovie)
+      adapter?.submitList(viewModelState.popularMovie)
     }
   }
 }
