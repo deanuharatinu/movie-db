@@ -1,6 +1,7 @@
 package com.deanuharatinu.core.data.source.remote
 
 import android.util.Log
+import com.deanuharatinu.core.BuildConfig
 import com.deanuharatinu.core.data.source.remote.model.MovieDetailResponse
 import com.deanuharatinu.core.data.source.remote.model.PopularMovieItemResponse
 import com.deanuharatinu.core.di.IoDispatcher
@@ -18,7 +19,7 @@ class RemoteDataSource @Inject constructor(
 ) {
   fun getPopularMovie(): Flow<ApiResponse<List<PopularMovie>>> = flow {
     try {
-      val response = movieService.getPopularMovie("9779cbcba5d3823d303e404aa822c5bc")
+      val response = movieService.getPopularMovie(BuildConfig.API_KEY)
       val data = response.results
       if (!data.isNullOrEmpty()) {
         val popularMovies = data.mapNotNull { itemResponse ->
@@ -36,7 +37,7 @@ class RemoteDataSource @Inject constructor(
 
   fun getMovieDetail(movieId: String): Flow<ApiResponse<MovieDetail>> = flow {
     try {
-      val response = movieService.getMovieDetail(movieId, "9779cbcba5d3823d303e404aa822c5bc")
+      val response = movieService.getMovieDetail(movieId, BuildConfig.API_KEY)
       val movieDetail = MovieDetailResponse.toDomain(response)
       emit(ApiResponse.Success(movieDetail))
     } catch (throwable: Throwable) {
