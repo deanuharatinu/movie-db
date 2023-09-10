@@ -18,10 +18,13 @@ android {
     buildConfigField("String", "API_KEY", "\"b650046bf640e7bf7054093854b8d02a\"")
     buildConfigField("String", "CHIPER_KEY", "\"b650046bf640e7bf7054093854b8d02a\"")
   }
-
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    debug {
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
