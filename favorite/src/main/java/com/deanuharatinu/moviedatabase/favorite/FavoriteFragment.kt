@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.deanuharatinu.core.utils.IntentConstants
 import com.deanuharatinu.moviedatabase.favorite.databinding.FragmentFavoriteBinding
 import com.deanuharatinu.moviedatabase.favorite.di.DaggerFavoriteComponent
 import com.deanuharatinu.moviedatabase.favorite.presentation.FavoriteViewModel
@@ -22,7 +23,7 @@ import javax.inject.Inject
 class FavoriteFragment : Fragment() {
   private var _binding: FragmentFavoriteBinding? = null
   private val binding get() = _binding!!
-  private lateinit var adapter: FavoriteMovieAdapter
+  private var adapter: FavoriteMovieAdapter? = null
 
   @Inject
   lateinit var viewModel: FavoriteViewModel
@@ -65,12 +66,13 @@ class FavoriteFragment : Fragment() {
   override fun onDestroyView() {
     super.onDestroyView()
     _binding = null
+    adapter = null
   }
 
   private fun initRecyclerView() {
     adapter = FavoriteMovieAdapter { movieId ->
       val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
-      intent.putExtra("movie_id", movieId)
+      intent.putExtra(IntentConstants.MOVIE_ID, movieId)
       startActivity(intent)
     }
     binding.rvFavoriteMovie.adapter = adapter
@@ -87,9 +89,11 @@ class FavoriteFragment : Fragment() {
   private fun loadContent(viewModelState: ViewModelState) {
     if (viewModelState.favoriteMovie.isEmpty()) {
       binding.layoutNotFound.visibility = View.VISIBLE
+      binding.rvFavoriteMovie.visibility = View.GONE
     } else {
       binding.layoutNotFound.visibility = View.GONE
-      adapter.submitList(viewModelState.favoriteMovie)
+      binding.rvFavoriteMovie.visibility = View.VISIBLE
+      adapter?.submitList(viewModelState.favoriteMovie)
     }
   }
 }

@@ -8,14 +8,13 @@ import com.deanuharatinu.moviedatabase.favorite.databinding.ItemFavoriteMovieBin
 import com.deanuharatinu.moviedatabase.favorite.presentation.FavoriteMovieUi
 
 class FavoriteMovieAdapter(
-  private val favoriteMovieList: MutableList<FavoriteMovieUi> = mutableListOf(),
+  private var favoriteMovieList: List<FavoriteMovieUi> = listOf(),
   private val onClick: (String) -> Unit
 ) : RecyclerView.Adapter<FavoriteMovieAdapter.ViewHolder>() {
 
   @SuppressLint("NotifyDataSetChanged")
   fun submitList(favoriteMovieList: List<FavoriteMovieUi>) {
-    this.favoriteMovieList.clear()
-    this.favoriteMovieList.addAll(favoriteMovieList)
+    this.favoriteMovieList = favoriteMovieList
     notifyDataSetChanged()
   }
 

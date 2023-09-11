@@ -26,13 +26,15 @@ class PopularMovieAdapter(
       popularMovieUi: PopularMovieUi,
       onClick: (String) -> Unit
     ) {
-      Glide
-        .with(binding.root.context)
-        .load(popularMovieUi.photoUrl)
-        .into(binding.ivPopularMovie)
+      with(binding) {
+        Glide
+          .with(root.context)
+          .load(popularMovieUi.photoUrl)
+          .into(ivPopularMovie)
 
-      binding.root.setOnClickListener {
-        onClick(popularMovieUi.movieId)
+        root.setOnClickListener {
+          onClick(popularMovieUi.movieId)
+        }
       }
     }
   }

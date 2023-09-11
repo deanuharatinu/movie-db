@@ -6,3 +6,7 @@ object ApiConstants {
   const val MOVIE_POPULAR = "movie/popular"
   const val MOVIE_DETAIL = "movie/"
 }
+
+object IntentConstants {
+  const val MOVIE_ID = "movie_id"
+}

@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.deanuharatinu.core.utils.IntentConstants
 import com.deanuharatinu.moviedatabase.databinding.FragmentHomeBinding
 import com.deanuharatinu.moviedatabase.ui.home.presentation.HomeViewModel
 import com.deanuharatinu.moviedatabase.ui.home.presentation.ViewModelState
@@ -22,7 +23,7 @@ class HomeFragment : Fragment() {
   private var _binding: FragmentHomeBinding? = null
   private val binding get() = _binding!!
   private val homeViewModel: HomeViewModel by viewModels()
-  private lateinit var adapter: PopularMovieAdapter
+  private var adapter: PopularMovieAdapter? = null
 
   override fun onCreateView(
     inflater: LayoutInflater,
@@ -42,12 +43,13 @@ class HomeFragment : Fragment() {
   override fun onDestroyView() {
     super.onDestroyView()
     _binding = null
+    adapter = null
   }
 
   private fun initRecyclerView() {
     adapter = PopularMovieAdapter { movieId ->
       val intent = Intent(requireActivity(), MovieDetailActivity::class.java)
-      intent.putExtra("movie_id", movieId)
+      intent.putExtra(IntentConstants.MOVIE_ID, movieId)
       startActivity(intent)
     }
     binding.rvPopularMovie.adapter = adapter
@@ -66,7 +68,7 @@ class HomeFragment : Fragment() {
       binding.loading.visibility = View.VISIBLE
     } else {
       binding.loading.visibility = View.GONE
-      adapter.submitList(viewModelState.popularMovie)
+      adapter?.submitList(viewModelState.popularMovie)
     }
   }
 }

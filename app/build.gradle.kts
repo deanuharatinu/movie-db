@@ -21,7 +21,11 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    debug {
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
@@ -44,6 +48,9 @@ apply(from = "../shared_dependencies.gradle")
 
 dependencies {
   implementation(project(":core"))
+
+  // Leak canary
+  debugImplementation("com.squareup.leakcanary:leakcanary-android:2.10")
 }
 
 kapt {

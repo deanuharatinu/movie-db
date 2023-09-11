@@ -14,11 +14,17 @@ android {
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     consumerProguardFiles("consumer-rules.pro")
-  }
 
+    buildConfigField("String", "API_KEY", "\"b650046bf640e7bf7054093854b8d02a\"")
+    buildConfigField("String", "CHIPER_KEY", "\"b650046bf640e7bf7054093854b8d02a\"")
+  }
   buildTypes {
     release {
-      isMinifyEnabled = false
+      isMinifyEnabled = true
+      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    }
+    debug {
+      isMinifyEnabled = true
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
@@ -50,6 +56,9 @@ dependencies {
   kapt("androidx.room:room-compiler:2.5.2")
   implementation("androidx.room:room-ktx:2.5.2")
   androidTestImplementation("androidx.room:room-testing:2.5.2")
+
+  implementation("net.zetetic:android-database-sqlcipher:4.5.3")
+  implementation("androidx.sqlite:sqlite-ktx:2.3.1")
 }
 
 kapt {

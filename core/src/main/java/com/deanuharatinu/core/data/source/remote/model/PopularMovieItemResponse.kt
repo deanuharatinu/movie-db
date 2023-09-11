@@ -1,9 +1,11 @@
 package com.deanuharatinu.core.data.source.remote.model
 
+import androidx.annotation.Keep
 import com.deanuharatinu.core.domain.model.PopularMovie
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@Keep
 @JsonClass(generateAdapter = true)
 data class PopularMovieResponse(
   @Json(name = "page")
